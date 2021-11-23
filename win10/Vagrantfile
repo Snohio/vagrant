@@ -1,0 +1,17 @@
+# Windows 10 Desktop
+
+Vagrant.configure("2") do |config|
+  config.vm.hostname = "win10-#{rand(10)}"
+  config.vm.provider 'virtualbox' do |v|
+    v.memory = 2048
+    v.cpus = 2
+    v.gui = false
+    v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+    v.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+  end
+  config.vm.box = "tas50/windows_10"
+  config.winrm.username = "vagrant"
+  config.winrm.password = "vagrant"
+  config.vm.network "NAT_Network", type: "dhcp",
+    virtualbox_intnet: "NatNetwork"  
+end
